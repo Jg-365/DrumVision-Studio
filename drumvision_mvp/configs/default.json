@@ -1,0 +1,71 @@
+{
+  "camera_id": 0,
+  "mode": "air",
+  "midi_enabled": true,
+  "audio_enabled": true,
+  "pieces": {
+    "snare": {
+      "midi_note": 38,
+      "position": [320, 240],
+      "radius": 60,
+      "cooldown_ms": 120,
+      "velocity_min": 10,
+      "velocity_max": 2000,
+      "threshold_speed": 450
+    },
+    "kick": {
+      "midi_note": 36,
+      "position": [320, 420],
+      "radius": 70,
+      "cooldown_ms": 150,
+      "velocity_min": 10,
+      "velocity_max": 2000,
+      "threshold_speed": 500
+    },
+    "hihat": {
+      "midi_note": 42,
+      "position": [200, 200],
+      "radius": 50,
+      "cooldown_ms": 120,
+      "velocity_min": 10,
+      "velocity_max": 2000,
+      "threshold_speed": 420
+    },
+    "tom1": {
+      "midi_note": 48,
+      "position": [420, 220],
+      "radius": 55,
+      "cooldown_ms": 120,
+      "velocity_min": 10,
+      "velocity_max": 2000,
+      "threshold_speed": 430
+    },
+    "tom2": {
+      "midi_note": 45,
+      "position": [480, 280],
+      "radius": 55,
+      "cooldown_ms": 120,
+      "velocity_min": 10,
+      "velocity_max": 2000,
+      "threshold_speed": 430
+    },
+    "crash": {
+      "midi_note": 49,
+      "position": [120, 120],
+      "radius": 65,
+      "cooldown_ms": 180,
+      "velocity_min": 10,
+      "velocity_max": 2000,
+      "threshold_speed": 480
+    },
+    "ride": {
+      "midi_note": 51,
+      "position": [520, 140],
+      "radius": 65,
+      "cooldown_ms": 180,
+      "velocity_min": 10,
+      "velocity_max": 2000,
+      "threshold_speed": 480
+    }
+  }
+}
