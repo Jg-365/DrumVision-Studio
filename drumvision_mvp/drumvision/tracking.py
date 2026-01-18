@@ -42,13 +42,8 @@ class HandHistory:
 
 class HandTracker:
     def __init__(self) -> None:
-        if not hasattr(mp, "solutions"):
-            raise RuntimeError(
-                "MediaPipe 'solutions' API not available. Ensure the official "
-                "'mediapipe' package is installed and no local mediapipe.py "
-                "shadows the dependency."
-            )
-        self.hands = mp.solutions.hands.Hands(
+        self.solutions = self._load_solutions()
+        self.hands = self.solutions.hands.Hands(
             max_num_hands=2,
             model_complexity=1,
             min_detection_confidence=0.5,
@@ -72,18 +67,37 @@ class HandTracker:
         return smoothed
 
     @staticmethod
-    def _strike_point(landmarks, image_shape: Tuple[int, int]) -> Tuple[int, int]:
+    def _load_solutions():
+        if hasattr(mp, "solutions"):
+            return mp.solutions
+        try:
+            from mediapipe import solutions as mp_solutions
+
+            return mp_solutions
+        except Exception:
+            try:
+                from mediapipe.python import solutions as mp_solutions
+
+                return mp_solutions
+            except Exception as exc:
+                raise RuntimeError(
+                    "MediaPipe 'solutions' API not available. Ensure the official "
+                    "'mediapipe' package is installed and no local mediapipe.py "
+                    "shadows the dependency."
+                ) from exc
+
+    def _strike_point(self, landmarks, image_shape: Tuple[int, int]) -> Tuple[int, int]:
         h, w = image_shape
-        idx_tip = landmarks[mp.solutions.hands.HandLandmark.INDEX_FINGER_TIP]
+        idx_tip = landmarks[self.solutions.hands.HandLandmark.INDEX_FINGER_TIP]
         if idx_tip:
             return int(idx_tip.x * w), int(idx_tip.y * h)
-        wrist = landmarks[mp.solutions.hands.HandLandmark.WRIST]
+        wrist = landmarks[self.solutions.hands.HandLandmark.WRIST]
         palm = [
             wrist,
-            landmarks[mp.solutions.hands.HandLandmark.INDEX_FINGER_MCP],
-            landmarks[mp.solutions.hands.HandLandmark.MIDDLE_FINGER_MCP],
-            landmarks[mp.solutions.hands.HandLandmark.RING_FINGER_MCP],
-            landmarks[mp.solutions.hands.HandLandmark.PINKY_MCP],
+            landmarks[self.solutions.hands.HandLandmark.INDEX_FINGER_MCP],
+            landmarks[self.solutions.hands.HandLandmark.MIDDLE_FINGER_MCP],
+            landmarks[self.solutions.hands.HandLandmark.RING_FINGER_MCP],
+            landmarks[self.solutions.hands.HandLandmark.PINKY_MCP],
         ]
         x = int(sum(p.x for p in palm) / len(palm) * w)
         y = int(sum(p.y for p in palm) / len(palm) * h)
