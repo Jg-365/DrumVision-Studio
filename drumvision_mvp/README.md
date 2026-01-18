@@ -50,6 +50,11 @@ python run.py
 - Evite fundos muito complexos.
 - Posicione a câmera de frente para as mãos/baquetas, com o kit visível.
 
+## Troubleshooting
+
+- **Erro: `MediaPipe 'solutions' API not available`**  
+  Garanta que o pacote oficial `mediapipe` está instalado (ex.: `pip install mediapipe`) e que não existe um arquivo local chamado `mediapipe.py` na pasta do projeto que esteja sobrescrevendo o pacote.
+
 ## Estrutura do projeto
 
 ```

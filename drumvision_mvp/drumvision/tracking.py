@@ -42,6 +42,12 @@ class HandHistory:
 
 class HandTracker:
     def __init__(self) -> None:
+        if not hasattr(mp, "solutions"):
+            raise RuntimeError(
+                "MediaPipe 'solutions' API not available. Ensure the official "
+                "'mediapipe' package is installed and no local mediapipe.py "
+                "shadows the dependency."
+            )
         self.hands = mp.solutions.hands.Hands(
             max_num_hands=2,
             model_complexity=1,
